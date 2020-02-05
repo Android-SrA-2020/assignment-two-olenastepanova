@@ -39,6 +39,8 @@ Roiland voices the eponymous characters, with Chris Parnell, Spencer Grammer and
 The series has been picked up for an additional seventy episodes over an unspecified number of seasons, beginning with season 4. The fourth season
         premiered on November 10, 2019 and will consist of ten episodes.</string>
     <string name="about_title">About</string>
+    <string name="aboutTitle_label">About</string>
+    <string name="rickimage_desc">rickImage</string>
 
 
 </resources>

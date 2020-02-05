@@ -4,45 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
    >
 
-    <LinearLayout
-
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/about_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:layout="@layout/fragment_about"
         tools:context=".AboutFragment"
-        >
+        tools:layout="@layout/fragment_about">
+
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/rick_and_morty_image"
-            tools:src="@tools:sample/avatars" />
+            android:id="@+id/about_image"
+            android:layout_width="396dp"
+            android:layout_height="229dp"
+            android:contentDescription="@string/rickimage_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/rm" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="211dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/aboutTitle_label"
+            android:textAlignment="center"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/about_image" />
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp">
+            android:id="@+id/about_scroll"
+            android:layout_width="393dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/about_Label"
+                    android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
+                    android:layout_marginBottom="5dp"
                     android:text="@string/about_text"
-                    android:textAlignment="textStart"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </ScrollView>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
 </layout>
