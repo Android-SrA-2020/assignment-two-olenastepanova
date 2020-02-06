@@ -6,9 +6,27 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.nbcc.rickmortyquiz.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_cheatFragment"
+            app:destination="@id/cheat_layout" />
+    </fragment>
     <fragment
         android:id="@+id/about_layout"
         android:name="com.nbcc.rickmortyquiz.AboutFragment"
         android:label="AboutFragment" />
+    <fragment
+        android:id="@+id/cheat_layout"
+        android:name="com.nbcc.rickmortyquiz.CheatFragment"
+        android:label="CheatFragment" >
+        <action
+            android:id="@+id/action_cheatFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <argument
+            android:name="answer"
+            app:argType="string" />
+        <argument
+            android:name="question"
+            app:argType="integer" />
+    </fragment>
 </navigation>

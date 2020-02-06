@@ -58,6 +58,9 @@ class MainFragment : Fragment() {
         )
 
 
+        //navController = view!!.findNavController();
+
+
         updateView();
 
         //assign event listeners to answer buttons
@@ -80,6 +83,19 @@ class MainFragment : Fragment() {
                     questionIndex = questionBank.size - 1;
                 }
                 updateView();
+            }
+
+            //navigate to Cheat Fragment
+            cheatButton.setOnClickListener{
+
+                val questionText = questionBank[questionIndex].resourceId
+                val answer = questionBank[questionIndex].answer.toString();
+
+
+                val action = MainFragmentDirections
+                    .actionMainFragmentToCheatFragment(answer, questionText)
+
+                view!!.findNavController().navigate(action)
             }
 
         }
