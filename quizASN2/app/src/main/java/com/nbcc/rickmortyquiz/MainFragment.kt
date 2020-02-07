@@ -2,10 +2,12 @@ package com.nbcc.rickmortyquiz
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -19,6 +21,9 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var navController: NavController
+
+    //question that are currently displayed in a view
+    private var questionIndex = 0;
 
     //list of questions
     private val questionBank = listOf(
@@ -44,8 +49,6 @@ class MainFragment : Fragment() {
         Question(R.string.question_20, true)
     )
 
-    //question that are currently displayed in a view
-    private var questionIndex = 0;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,51 +60,15 @@ class MainFragment : Fragment() {
             container, false
         )
 
+        questionIndex = savedInstanceState?.getInt("questionId") ?: 0
 
-        //navController = view!!.findNavController();
+        updateView(questionIndex)
 
-
-        updateView();
-
-        //assign event listeners to answer buttons
-        binding.apply {
-            falseButton.setOnClickListener { evaluateAnswer(false) }
-            trueButton.setOnClickListener { evaluateAnswer(true) }
-
-            //iterate through questions
-            nextButton.setOnClickListener {
-                questionIndex++;
-                if (questionIndex % questionBank.size == 0) {
-                    questionIndex = 0;
-                }
-                updateView();
-            }
-
-            prevButton.setOnClickListener {
-                questionIndex--;
-                if (questionIndex == -1) {
-                    questionIndex = questionBank.size - 1;
-                }
-                updateView();
-            }
-
-            //navigate to Cheat Fragment
-            cheatButton.setOnClickListener{
-
-                val questionText = questionBank[questionIndex].resourceId
-                val answer = questionBank[questionIndex].answer.toString();
-
-
-                val action = MainFragmentDirections
-                    .actionMainFragmentToCheatFragment(answer, questionText)
-
-                view!!.findNavController().navigate(action)
-            }
-
-        }
+        assignListeners()
 
         //options menu
         setHasOptionsMenu(true)
+
 
         return binding.root
     }
@@ -118,17 +85,78 @@ class MainFragment : Fragment() {
                 || super.onOptionsItemSelected(item)
     }
 
+    //Preserve the state
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt("questionId", questionIndex)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        questionIndex = savedInstanceState?.getInt("questionId") ?: 0
+        updateView(questionIndex)
+        assignListeners()
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        questionIndex = savedInstanceState?.getInt("questionId") ?: 0
+        updateView(questionIndex)
+        assignListeners()
+    }
 
 
     /**
      * Shows new question in a text label
      */
-    private fun updateView() {
+    private fun updateView(questionId : Int) {
         //set text to resource Id(question)
         binding.apply {
-            questionLabel.setText(questionBank[questionIndex].resourceId)
+            questionLabel.setText(questionBank[questionId].resourceId)
         }
 
+    }
+
+    private fun assignListeners(){
+        //assign event listeners to answer buttons
+        binding.apply {
+            falseButton.setOnClickListener { evaluateAnswer(false) }
+            trueButton.setOnClickListener { evaluateAnswer(true) }
+
+            //iterate through questions
+            nextButton.setOnClickListener {
+                questionIndex++;
+                if (questionIndex % questionBank.size == 0) {
+                    questionIndex = 0;
+                }
+                updateView(questionIndex);
+            }
+
+            prevButton.setOnClickListener {
+                questionIndex--;
+                if (questionIndex == -1) {
+                    questionIndex = questionBank.size - 1;
+                }
+                updateView(questionIndex);
+            }
+
+            //navigate to Cheat Fragment
+            cheatButton.setOnClickListener{
+
+                val questionText = questionBank[questionIndex].resourceId
+                val answer = questionBank[questionIndex].answer.toString();
+
+
+                val action = MainFragmentDirections
+                    .actionMainFragmentToCheatFragment(answer, questionText)
+
+                view!!.findNavController().navigate(action)
+            }
+
+        }
     }
 
     /**

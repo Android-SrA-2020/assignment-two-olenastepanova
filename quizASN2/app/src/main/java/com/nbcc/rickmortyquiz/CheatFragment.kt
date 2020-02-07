@@ -51,7 +51,7 @@ class CheatFragment : Fragment() {
 
             cancelButton.setOnClickListener{
 
-                //send resourseeId back???
+                //send resourseId back???
 
                     val action = CheatFragmentDirections
                         .actionCheatFragmentToMainFragment()
