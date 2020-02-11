@@ -2,12 +2,10 @@ package com.nbcc.rickmortyquiz
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -50,6 +48,13 @@ class MainFragment : Fragment() {
     )
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+       questionIndex = savedInstanceState?.getInt("questionId") ?: 0
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,12 +65,6 @@ class MainFragment : Fragment() {
             container, false
         )
 
-        questionIndex = savedInstanceState?.getInt("questionId") ?: 0
-
-        updateView(questionIndex)
-
-        assignListeners()
-
         //options menu
         setHasOptionsMenu(true)
 
@@ -73,6 +72,15 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        updateView(questionIndex)
+
+        assignListeners()
+
+    }
     //options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -97,7 +105,7 @@ class MainFragment : Fragment() {
 
         questionIndex = savedInstanceState?.getInt("questionId") ?: 0
         updateView(questionIndex)
-        assignListeners()
+       // assignListeners()
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -105,7 +113,12 @@ class MainFragment : Fragment() {
 
         questionIndex = savedInstanceState?.getInt("questionId") ?: 0
         updateView(questionIndex)
-        assignListeners()
+        //assignListeners()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        updateView(questionIndex)
     }
 
 

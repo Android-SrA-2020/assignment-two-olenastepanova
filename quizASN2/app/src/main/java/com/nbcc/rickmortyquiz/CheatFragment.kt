@@ -53,10 +53,11 @@ class CheatFragment : Fragment() {
 
                 //send resourseId back???
 
-                    val action = CheatFragmentDirections
-                        .actionCheatFragmentToMainFragment()
-
-                    view!!.findNavController().navigate(action)
+                activity!!.onBackPressed()
+//                    val action = CheatFragmentDirections
+//                        .actionCheatFragmentToMainFragment()
+//
+//                    view!!.findNavController().navigate(action)action
             }
         }
 
