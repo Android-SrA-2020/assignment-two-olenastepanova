@@ -18,7 +18,6 @@ import com.nbcc.rickmortyquiz.databinding.FragmentMainBinding
 class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
-    private lateinit var navController: NavController
 
     //question that are currently displayed in a view
     private var questionIndex = 0;
@@ -51,7 +50,7 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       questionIndex = savedInstanceState?.getInt("questionId") ?: 0
+       questionIndex = savedInstanceState?.getInt("questionId") ?: questionIndex
 
     }
 
@@ -67,14 +66,11 @@ class MainFragment : Fragment() {
 
         //options menu
         setHasOptionsMenu(true)
-
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         updateView(questionIndex)
 
@@ -100,27 +96,21 @@ class MainFragment : Fragment() {
         outState.putInt("questionId", questionIndex)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        questionIndex = savedInstanceState?.getInt("questionId") ?: 0
-        updateView(questionIndex)
-       // assignListeners()
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-
-        questionIndex = savedInstanceState?.getInt("questionId") ?: 0
-        updateView(questionIndex)
-        //assignListeners()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        updateView(questionIndex)
-    }
-
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//
+//        questionIndex = savedInstanceState?.getInt("questionId") ?: questionIndex
+//        updateView(questionIndex)
+//
+//    }
+//
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//
+//        questionIndex = savedInstanceState?.getInt("questionId") ?: questionIndex
+//        updateView(questionIndex)
+//
+//    }
 
     /**
      * Shows new question in a text label
